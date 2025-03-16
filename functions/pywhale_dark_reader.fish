@@ -1,4 +1,4 @@
-function pywal_dark_reader --on-variable pywhale_image
+function pywal_dark_reader
     wal -i $pywhale_image $pywhale_options
     set dark_background (head -n 1 ~/.cache/wal/colors)
     set dark_foreground (tail -n 1 ~/.cache/wal/colors)
@@ -7,7 +7,7 @@ function pywal_dark_reader --on-variable pywhale_image
     set light_background (head -n 1 ~/.cache/wal/colors)
     set light_foreground (tail -n 1 ~/.cache/wal/colors)
 
-    pywhale_update
+    pywhale update
 
     echo '
 		chrome.runtime.sendMessage({

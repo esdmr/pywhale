@@ -1,4 +1,4 @@
-function pywhale_update --on-variable pywhale_options --on-variable pywhale_force
+function pywhale_update
     set -l t (math (date +%H) x 100 + (date +%M))
 
     echo [\e'[1;32m'I\e'[m'] \e'[1;31m'pywhale_update\e'[m': Dark theme

@@ -24,20 +24,46 @@ Most of these are not strictly necessary. I will remove them once I fixed the sc
 - crudini
 - Discord, along with pywal-discord
 - Dash to Dock GNOME extension
-- Catpuccin theme for GTK (yes, the deprecated one)
+- Catppuccin theme for GTK (yes, the deprecated one)
 - Node.js
-- pnpm, probably though corepack
+- pnpm, probably through corepack
 
 ## Setup
 
 1. `git clone https://github.com/esdmr/pywhale.git`
-2. `cd pywhale`
+2. `cd pywhale/wal2catppuccin`
+3. `pnpm i -P`
+4. `pnpm link -g`
+5. `cd ..`
+6. `fisher install .`
+7.  `pywhale update --set-image <path>`, Dark Reader settings should open.
+8.  In dev console, run the copied script.
+9.  Close Dark Reader tab.
+
+## Usage
+
+- Change the wallpaper image: `pywhale update --set-image <path>`.
+  1. This will open the Dark Reader settings.
+  2. In dev console, run the copied script.
+  3. Close Dark Reader tab.
+- Force dark or light theme: `pywhale update --force <light|dark>`.
+- Change pywal options: `pywhale update -- <options...>`.
+- Update the theme according to preset schedule: `pywhale update`. (Between 05:30 and 17:30, it will use a light theme.)
+
+## Update
+
+1. `cd pywhale/wal2catppuccin`
+2. `git pull`
+3. `pnpm i -P`
+4. `cd ..`
+5. `fisher install .`
+6.  `pywhale update`
+
+## Uninstall
+
+1. `cd pywhale`
+2. `fisher remove .`
 3. `cd wal2catppuccin`
-4. `pnpm i -P`
-5. `pnpm link -g`
-6. `cd ..`
-7. `set -U pywhale_image # Path to image, required`
-8. `set -U pywhale_options # Options to pass to pywal, optional`
-9. `set -U pywhale_force # Either dark or light, optional`
-10. `fisher install .`
-11. `pywhale_update`
+4. `pnpm unlink -g`
+5. `cd ../..`
+6. `rm pywhale`
