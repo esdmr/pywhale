@@ -27,6 +27,7 @@ Most of these are not strictly necessary. I will remove them once I fixed the sc
 - Catppuccin theme for GTK (yes, the deprecated one)
 - Node.js
 - pnpm, probably through corepack
+- VS Code with Wal Theme extension (optional)
 
 ## Setup
 
