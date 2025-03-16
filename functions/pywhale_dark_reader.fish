@@ -1,4 +1,4 @@
-function pywal_dark_reader
+function pywhale_dark_reader
     wal -i $pywhale_image $pywhale_options
     set dark_background (head -n 1 ~/.cache/wal/colors)
     set dark_foreground (tail -n 1 ~/.cache/wal/colors)
