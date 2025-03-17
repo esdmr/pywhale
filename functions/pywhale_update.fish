@@ -1,9 +1,15 @@
 function pywhale_update
+    set -l --path pywalpath (mktemp -d) $PATH
+
+    echo "#!$(which true)" >"$pywalpath[1]/pywalfox"
+    chmod +x "$pywalpath[1]/pywalfox"
+    echo [\e'[1;32m'I\e'[m'] \e'[1;31m'pywal_update\e'[m': Stubbed pywalfox for pywal16.
+
     set -l t (math (date +%H) x 100 + (date +%M))
 
     echo [\e'[1;32m'I\e'[m'] \e'[1;31m'pywhale_update\e'[m': Dark theme
 
-    wal -i $pywhale_image $pywhale_options
+    PATH=$pywalpath wal -i $pywhale_image $pywhale_options
     echo [\e'[1;32m'I\e'[m'] \e'[1;31m'pywal\e'[m': Updated.
 
     pywalfox update
@@ -18,7 +24,7 @@ function pywhale_update
 
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'pywhale_update\e'[m': Light theme
 
-        wal -i $pywhale_image $pywhale_options -l
+        PATH=$pywalpath wal -i $pywhale_image $pywhale_options -l
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'pywal\e'[m': Updated.
 
         set -eg BAT_THEME
@@ -64,4 +70,7 @@ function pywhale_update
 
     dconf write /org/gnome/shell/extensions/user-theme/name (echo $catppuccin | jq -R .)
     echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gnome-shell\e'[m': Set to $catppuccin.
+
+    rm -r $pywalpath[1]
+    echo [\e'[1;32m'I\e'[m'] \e'[1;31m'pywal_update\e'[m': Cleaned up pywalfox stub.
 end
