@@ -32,7 +32,7 @@ Most of these are not strictly necessary. I will remove them once I fixed the sc
 ## Setup
 
 1. `git clone https://github.com/esdmr/pywhale.git`
-2. `cd pywhale/wal2catppuccin`
+2. `cd pywhale/walconvert`
 3. `pnpm i -P`
 4. `pnpm link -g`
 5. `cd ..`
