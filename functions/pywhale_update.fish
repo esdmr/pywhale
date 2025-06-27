@@ -78,9 +78,20 @@ function pywhale_update
     echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gnome-shell\e'[m': Set to $catppuccin.
 
     set gtk (wal2gtk4) || return
+    touch $XDG_CONFIG_HOME/gtk-4.0/gtk.css
 
-    sed -i "s/@define-color accent_color [^;]*;/@define-color accent_color $gtk;/g" $XDG_CONFIG_HOME/gtk-4.0/gtk.css
-    sed -i "s/@define-color accent_bg_color [^;]*;/@define-color accent_bg_color $gtk;/g" $XDG_CONFIG_HOME/gtk-4.0/gtk.css
+    if grep -qE '@define-color accent_color [^;]*;' $XDG_CONFIG_HOME/gtk-4.0/gtk.css
+        echo "@define-color accent_color $gtk;" >>$XDG_CONFIG_HOME/gtk-4.0/gtk.css
+    else
+        sed -i "s/@define-color accent_color [^;]*;/@define-color accent_color $gtk;/g" $XDG_CONFIG_HOME/gtk-4.0/gtk.css
+    end
+
+    if grep -qE '@define-color accent_bg_color [^;]*;' $XDG_CONFIG_HOME/gtk-4.0/gtk.css
+        echo "@define-color accent_bg_color $gtk;" >>$XDG_CONFIG_HOME/gtk-4.0/gtk.css
+    else
+        sed -i "s/@define-color accent_bg_color [^;]*;/@define-color accent_bg_color $gtk;/g" $XDG_CONFIG_HOME/gtk-4.0/gtk.css
+    end
+
     echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gtk4\e'[m': Set to $gtk.
 
     rm -r $pywalpath[1]
