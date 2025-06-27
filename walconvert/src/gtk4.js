@@ -1,13 +1,13 @@
 /** @type {import('./wal.js').Palette} */
 export const gtkPalette = {
 	colors: {
-		blue: '#1a5fb4',
-		green: '#26a269',
-		yellow: '#e5a50a',
-		orange: '#c64600',
-		red: '#a51d2d',
-		purple: '#613583',
-		brown: '#63452c',
+		blue: '#1c71d8',
+		green: '#2ec27e',
+		yellow: '#f5c211',
+		orange: '#e66100',
+		red: '#c01c28',
+		purple: '#813d9c',
+		brown: '#865e3c',
 	},
 	light: false,
 	index: 'gtk4',
