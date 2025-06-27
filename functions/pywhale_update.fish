@@ -31,6 +31,9 @@ function pywhale_update
         set -Ux BAT_THEME 'Monokai Extended Light'
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'bat\e'[m': Updated.
 
+        dconf write /org/gnome/desktop/interface/color-scheme '"prefer-light"'
+        echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gnome\e'[m': Set to light theme.
+
         dconf write /org/gnome/gedit/preferences/editor/scheme '"solarized-light"'
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gedit\e'[m': Updated.
 
@@ -46,6 +49,9 @@ function pywhale_update
         set -eg BAT_THEME
         set -Ux BAT_THEME 'Monokai Extended'
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'bat\e'[m': Updated.
+
+        dconf write /org/gnome/desktop/interface/color-scheme '"prefer-dark"'
+        echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gnome\e'[m': Set to dark theme.
 
         dconf write /org/gnome/gedit/preferences/editor/scheme '"solarized-dark"'
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gedit\e'[m': Updated.
