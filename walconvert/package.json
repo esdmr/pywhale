@@ -1,9 +1,14 @@
 {
 	"private": true,
-	"name": "wal2catppuccin",
+	"name": "walconvert",
 	"version": "0.0.0",
 	"type": "module",
-	"bin": "index.js",
+	"exports": {
+		"./*": "./src/*"
+	},
+	"bin": {
+		"wal2catppuccin": "bin/wal2catppuccin.js"
+	},
 	"dependencies": {
 		"@catppuccin/palette": "^1.7.1",
 		"@texel/color": "^1.1.9"

@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"noEmit": true,
+		"module": "NodeNext",
+		"strict": true,
+		"allowJs": true,
+		"checkJs": true
+	},
+	"include": [
+		"src/**/*.js",
+		"bin/*"
+	]
+}
