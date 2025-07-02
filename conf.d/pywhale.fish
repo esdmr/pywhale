@@ -22,4 +22,10 @@ if test "+$TERM_PROGRAM" != "+vscode"
     if test -f $XDG_CACHE_HOME/wal/colors.fish
         source $XDG_CACHE_HOME/wal/colors.fish
     end
+
+    set -eg BAT_THEME
+    set -eg PTPYTHON_OPTIONS
+else
+    set -gx BAT_THEME
+    set -gx PTPYTHON_OPTIONS
 end

@@ -37,7 +37,8 @@ function pywhale_update
         dconf write /org/gnome/gedit/preferences/editor/scheme '"solarized-light"'
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gedit\e'[m': Updated.
 
-        set -U PTPYTHON_OPTIONS --light-bg
+        set -eg PTPYTHON_OPTIONS
+        set -Ux PTPYTHON_OPTIONS --light-bg
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'ptpython\e'[m': Set to light theme.
 
         crudini --set $XDG_CONFIG_HOME/MuseScore/MuseScore4.ini ui 'application\currentThemeCode' light
@@ -56,7 +57,8 @@ function pywhale_update
         dconf write /org/gnome/gedit/preferences/editor/scheme '"solarized-dark"'
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gedit\e'[m': Updated.
 
-        set -U PTPYTHON_OPTIONS --dark-bg
+        set -eg PTPYTHON_OPTIONS
+        set -Ux PTPYTHON_OPTIONS --dark-bg
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'ptpython\e'[m': Set to dark theme.
 
         crudini --set $XDG_CONFIG_HOME/MuseScore/MuseScore4.ini ui 'application\currentThemeCode' dark
