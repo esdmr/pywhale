@@ -8,7 +8,9 @@
 	},
 	"bin": {
 		"wal2catppuccin": "bin/wal2catppuccin.js",
-		"wal2gtk4": "bin/wal2gtk4.js"
+		"wal2gtk4": "bin/wal2gtk4.js",
+		"wal2yaru": "bin/wal2yaru.js",
+		"wal2gnomeicons": "bin/wal2gnomeicons.js"
 	},
 	"dependencies": {
 		"@catppuccin/palette": "^1.7.1",
