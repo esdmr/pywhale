@@ -41,6 +41,14 @@ function pywhale_update
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gnome\e'[m': Set to light theme. (math (date +%s.%N) - $start)s
 
         set start (date +%s.%N)
+        dconf write /org/cinnamon/desktop/interface/color-scheme '"prefer-light"'
+        echo [\e'[1;32m'I\e'[m'] \e'[1;31m'cinnamon\e'[m': Set to light theme. (math (date +%s.%N) - $start)s
+
+        set start (date +%s.%N)
+        dconf write /org/x/apps/portal/color-scheme '"prefer-light"'
+        echo [\e'[1;32m'I\e'[m'] \e'[1;31m'x portal\e'[m': Set to light theme. (math (date +%s.%N) - $start)s
+
+        set start (date +%s.%N)
         dconf write /org/gnome/gedit/preferences/editor/scheme '"solarized-light"'
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gedit\e'[m': Updated. (math (date +%s.%N) - $start)s
 
@@ -65,6 +73,14 @@ function pywhale_update
         set start (date +%s.%N)
         dconf write /org/gnome/desktop/interface/color-scheme '"prefer-dark"'
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gnome\e'[m': Set to dark theme. (math (date +%s.%N) - $start)s
+
+        set start (date +%s.%N)
+        dconf write /org/cinnamon/desktop/interface/color-scheme '"prefer-dark"'
+        echo [\e'[1;32m'I\e'[m'] \e'[1;31m'cinnamon\e'[m': Set to dark theme. (math (date +%s.%N) - $start)s
+
+        set start (date +%s.%N)
+        dconf write /org/x/apps/portal/color-scheme '"prefer-dark"'
+        echo [\e'[1;32m'I\e'[m'] \e'[1;31m'x portal\e'[m': Set to dark theme. (math (date +%s.%N) - $start)s
 
         set start (date +%s.%N)
         dconf write /org/gnome/gedit/preferences/editor/scheme '"solarized-dark"'
@@ -92,11 +108,19 @@ function pywhale_update
 
     set start (date +%s.%N)
     dconf write /org/gnome/desktop/interface/gtk-theme (echo $catppuccin | jq -R .)
-    echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gtk\e'[m': Set to $catppuccin. (math (date +%s.%N) - $start)s
+    echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gnome gtk\e'[m': Set to $catppuccin. (math (date +%s.%N) - $start)s
+
+    set start (date +%s.%N)
+    dconf write /org/cinnamon/desktop/interface/gtk-theme (echo $catppuccin | jq -R .)
+    echo [\e'[1;32m'I\e'[m'] \e'[1;31m'cinnamon gtk\e'[m': Set to $catppuccin. (math (date +%s.%N) - $start)s
 
     set start (date +%s.%N)
     dconf write /org/gnome/shell/extensions/user-theme/name (echo $catppuccin | jq -R .)
     echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gnome-shell\e'[m': Set to $catppuccin. (math (date +%s.%N) - $start)s
+
+    set start (date +%s.%N)
+    dconf write /org/cinnamon/theme/name (echo $catppuccin | jq -R .)
+    echo [\e'[1;32m'I\e'[m'] \e'[1;31m'cinnamon-shell\e'[m': Set to $catppuccin. (math (date +%s.%N) - $start)s
 
     set start (date +%s.%N)
     set gtk (wal2gtk4) || return
