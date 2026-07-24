@@ -21,6 +21,10 @@ function pywhale_update
         and test "$t" -ge 530 -a "$t" -le 1730
         or test "+$pywhale_force" = +light
 
+        set IS_LIGHT 1
+        set IS_DARK 0
+        set THEME light
+
         set start (date +%s.%N)
         pywalfox light
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'pywalfox\e'[m': Set to light theme. (math (date +%s.%N) - $start)s
@@ -61,6 +65,10 @@ function pywhale_update
         crudini --set $XDG_CONFIG_HOME/MuseScore/MuseScore4.ini ui 'application\currentThemeCode' light
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'musescore\e'[m': Set to light theme. (math (date +%s.%N) - $start)s
     else
+        set IS_LIGHT 0
+        set IS_DARK 1
+        set THEME dark
+    
         set start (date +%s.%N)
         pywalfox dark
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'pywalfox\e'[m': Set to dark theme. (math (date +%s.%N) - $start)s
@@ -100,45 +108,16 @@ function pywhale_update
     pywal-discord
     echo [\e'[1;32m'I\e'[m'] \e'[1;31m'pywal-discord\e'[m': Updated. (math (date +%s.%N) - $start)s
 
+    if set -q PYWHALE_CATPW_HOME
+        set start (date +%s.%N)
+        set accent (CATPW_GTK=1 wal2catppuccin)
+        CATPW_DARK=$IS_DARK $PYWHALE_CATPW_HOME/themes/install.sh -d $XDG_DATA_HOME/themes -a $accent -m $theme -l -s compact --shell opacity 1 radius 12
+        echo [\e'[1;32m'I\e'[m'] \e'[1;31m'shell\e'[m': Updated. (math (date +%s.%N) - $start)s
+    end
+
     set start (date +%s.%N)
     dconf write /org/gnome/shell/extensions/dash-to-dock/background-color (head -n +1 $XDG_CACHE_HOME/wal/colors | jq -R .)
     echo [\e'[1;32m'I\e'[m'] \e'[1;31m'dash-to-dock\e'[m': Updated. (math (date +%s.%N) - $start)s
-
-    set catppuccin (wal2catppuccin) || return
-
-    set start (date +%s.%N)
-    dconf write /org/gnome/desktop/interface/gtk-theme (echo $catppuccin | jq -R .)
-    echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gnome gtk\e'[m': Set to $catppuccin. (math (date +%s.%N) - $start)s
-
-    set start (date +%s.%N)
-    dconf write /org/cinnamon/desktop/interface/gtk-theme (echo $catppuccin | jq -R .)
-    echo [\e'[1;32m'I\e'[m'] \e'[1;31m'cinnamon gtk\e'[m': Set to $catppuccin. (math (date +%s.%N) - $start)s
-
-    set start (date +%s.%N)
-    dconf write /org/gnome/shell/extensions/user-theme/name (echo $catppuccin | jq -R .)
-    echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gnome-shell\e'[m': Set to $catppuccin. (math (date +%s.%N) - $start)s
-
-    set start (date +%s.%N)
-    dconf write /org/cinnamon/theme/name (echo $catppuccin | jq -R .)
-    echo [\e'[1;32m'I\e'[m'] \e'[1;31m'cinnamon-shell\e'[m': Set to $catppuccin. (math (date +%s.%N) - $start)s
-
-    set start (date +%s.%N)
-    set gtk (wal2gtk4) || return
-    touch $XDG_CONFIG_HOME/gtk-4.0/gtk.css
-
-    if grep -qE '@define-color accent_color [^;]*;' $XDG_CONFIG_HOME/gtk-4.0/gtk.css
-        sed -i "s/@define-color accent_color [^;]*;/@define-color accent_color $gtk;/g" $XDG_CONFIG_HOME/gtk-4.0/gtk.css
-    else
-        echo "@define-color accent_color $gtk;" >>$XDG_CONFIG_HOME/gtk-4.0/gtk.css
-    end
-
-    if grep -qE '@define-color accent_bg_color [^;]*;' $XDG_CONFIG_HOME/gtk-4.0/gtk.css
-        sed -i "s/@define-color accent_bg_color [^;]*;/@define-color accent_bg_color $gtk;/g" $XDG_CONFIG_HOME/gtk-4.0/gtk.css
-    else
-        echo "@define-color accent_bg_color $gtk;" >>$XDG_CONFIG_HOME/gtk-4.0/gtk.css
-    end
-
-    echo [\e'[1;32m'I\e'[m'] \e'[1;31m'gtk4\e'[m': Set to $gtk. (math (date +%s.%N) - $start)s
 
     set start (date +%s.%N)
     rm -r $pywalpath[1]
