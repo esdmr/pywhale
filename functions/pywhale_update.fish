@@ -15,7 +15,38 @@ function pywhale_update
 
     set start (date +%s.%N)
     pywalfox update
+
+    set pywalfox_config ~/.mozilla/native-messaging-hosts/pywalfox.json
+    set pywalfox_config_old ~/.mozilla/native-messaging-hosts/pywalfox.old.json
+    set pywalfox_script $XDG_CACHE_HOME/wal/pywalfox.sh
+
+    switch "$(cat $pywalfox_config)"
+        case "*$pywalfox_script*"
+            # Do nothing
+        case "*"
+            cp -f $pywalfox_config $pywalfox_config_old
+    end
+
+    set pywalfox_original (jq -r .path $pywalfox_config_old)
+
+    PYWHALE_PYWALFOX="$pywalfox_original" python3 -c '
+import sys
+from os import environ
+from pathlib import Path
+sys.path.append(str(Path(environ["PYWHALE_PYWALFOX"]).parent.parent.parent))
+
+from pywalfox.__main__ import get_python_version
+from pywalfox.daemon import Daemon
+
+daemon = Daemon(get_python_version().major)
+daemon.send_pywal_colors()
+' >$XDG_CACHE_HOME/wal/pywalfox.bin
+
     echo [\e'[1;32m'I\e'[m'] \e'[1;31m'pywalfox\e'[m': Updated. (math (date +%s.%N) - $start)s
+
+    set -l IS_LIGHT 0
+    set -l IS_DARK 1
+    set -l THEME dark
 
     if test -z "$pywhale_force"
         and test "$t" -ge 530 -a "$t" -le 1730
@@ -26,6 +57,7 @@ function pywhale_update
         set THEME light
 
         set start (date +%s.%N)
+        pywalfox dark
         pywalfox light
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'pywalfox\e'[m': Set to light theme. (math (date +%s.%N) - $start)s
 
@@ -65,11 +97,8 @@ function pywhale_update
         crudini --set $XDG_CONFIG_HOME/MuseScore/MuseScore4.ini ui 'application\currentThemeCode' light
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'musescore\e'[m': Set to light theme. (math (date +%s.%N) - $start)s
     else
-        set IS_LIGHT 0
-        set IS_DARK 1
-        set THEME dark
-    
         set start (date +%s.%N)
+        pywalfox light
         pywalfox dark
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'pywalfox\e'[m': Set to dark theme. (math (date +%s.%N) - $start)s
 
@@ -104,6 +133,10 @@ function pywhale_update
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'musescore\e'[m': Set to dark theme. (math (date +%s.%N) - $start)s
     end
 
+    echo $IS_LIGHT >$XDG_CACHE_HOME/wal/IS_LIGHT
+    echo $IS_DARK >$XDG_CACHE_HOME/wal/IS_DARK
+    echo $THEME >$XDG_CACHE_HOME/wal/THEME
+
     set start (date +%s.%N)
     pywal-discord
     echo [\e'[1;32m'I\e'[m'] \e'[1;31m'pywal-discord\e'[m': Updated. (math (date +%s.%N) - $start)s
@@ -111,7 +144,7 @@ function pywhale_update
     if set -q PYWHALE_CATPW_HOME
         set start (date +%s.%N)
         set accent (CATPW_GTK=1 wal2catppuccin)
-        CATPW_DARK=$IS_DARK $PYWHALE_CATPW_HOME/themes/install.sh -d $XDG_DATA_HOME/themes -a $accent -m $theme -l -s compact --shell opacity 1 radius 12
+        CATPW_DARK=$IS_DARK $PYWHALE_CATPW_HOME/themes/install.sh -d $XDG_DATA_HOME/themes -a $accent -m $theme -l -s compact --shell opacity 0.75 radius 12
         echo [\e'[1;32m'I\e'[m'] \e'[1;31m'shell\e'[m': Updated. (math (date +%s.%N) - $start)s
     end
 
